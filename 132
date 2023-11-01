@@ -1,0 +1,66 @@
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Установка минимального и максимального количества потоков
+        // int minWorkerThreads, minCompletionPortThreads;
+        // ThreadPool.GetMinThreads(out minWorkerThreads, out minCompletionPortThreads);
+        // ThreadPool.SetMinThreads(50, minCompletionPortThreads);
+        // ThreadPool.SetMaxThreads(100, minCompletionPortThreads);
+
+        string directoryPath = "C:/Users/olega/OneDrive/Рабочий стол/Async/app/filesAsync";
+
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        // SumInFilesAsync(directoryPath).GetAwaiter().GetResult();
+        Sync.SumInFile(directoryPath);
+
+        stopwatch.Stop();
+
+        TimeSpan elapsedTime = stopwatch.Elapsed;
+        Console.WriteLine($"Время выполнения программы: {elapsedTime.TotalMilliseconds} миллисекунд.");
+    }
+
+    // static async Task SumInFilesAsync(string directoryPath)
+    // {
+    //     if (Directory.Exists(directoryPath))
+    //     {
+    //         string[] fileNames = Directory.GetFiles(directoryPath);
+
+    //         var tasks = fileNames.Select(ProcessFileAsync).ToArray();
+
+    //         await Task.WhenAll(tasks);
+    //     }
+    //     else
+    //     {
+    //         Console.WriteLine("Директория не существует.");
+    //     }
+    // }
+
+    // static async Task ProcessFileAsync(string fileName)
+    // {
+    //     int fileSum = 0;
+
+    //     using (var reader = new StreamReader(fileName))
+    //     {
+    //         string line;
+    //         while ((line = await reader.ReadLineAsync()) != null)
+    //         {
+    //             if (int.TryParse(line, out int value))
+    //             {
+    //                 fileSum += value;
+    //             }
+    //         }
+    //     }
+
+    //     Console.WriteLine($"Сумма значений в файле {fileName}: {fileSum}");
+    // }
+}
